@@ -1,61 +1,81 @@
 import sys
-class GetNode:
-    def __init__(self):
-        self.data=None
-        self .head=None
-class LinkList:
-    def __init__(self):
-         self .head=None
-    def append(self):
-        data=int(input("enter data:"))
-        newNode=GetNode()
-        newNode.data=data
-        if self.head==None:
-            self.head=newNode
-        else:
-            ptr=self.head
-            while ptr.next!=None:
-                ptr=ptr.next
-                ptr.next=newNode
-                print(data,"is added")
 
-        
-    def traverse(self):
+class bst:
+    def __init__(self, key):
+        self.leftchild = None
+        self.data = key
+        self.rightchild = None
 
-        if self.head == None:
-            print("Linked List is Empty")
+    def insert(self, key):
+        if key < self.data:
+            if self.leftchild:
+                self.leftchild.insert(key)
+            else:
+                self.leftchild = bst(key)
 
-        else:
-            ptr = self.head
+        elif key > self.data:
+            if self.rightchild:
+                self.rightchild.insert(key)
+            else:
+                self.rightchild = bst(key)
 
-            while ptr != None:
-                print(ptr.data, end=" -> ")
-                ptr = ptr.next
+    def preorder(self):
+        print(self.data, end=" -> ")
+        if self.leftchild:
+            self.leftchild.preorder()
+        if self.rightchild:
+            self.rightchild.preorder()
 
-            print("None")
+    def inorder(self):
+        if self.leftchild:
+            self.leftchild.inorder()
+        print(self.data, end=" -> ")
+        if self.rightchild:
+            self.rightchild.inorder()
+
+    def postorder(self):
+        if self.leftchild:
+            self.leftchild.postorder()
+        if self.rightchild:
+            self.rightchild.postorder()
+        print(self.data, end=" -> ")
+
+
 if __name__ == '__main__':
+    arr = [36, 26, 21, 31, 11, 24, 41, 56, 51, 66]
 
-    obj = LinkList()
+    root = bst(arr[0])
+
+    for i in range(1, len(arr)):
+        root.insert(arr[i])
 
     while True:
-
-        print("\n1. Append")
-        print("2. Traverse")
-        print("0. Exit")
+        print("\n1.Insert")
+        print("2.Preorder")
+        print("3.Inorder")
+        print("4.Postorder")
+        print("0.Exit")
 
         n = int(input("Select any choice: "))
 
         if n == 1:
-            obj.append()
+            data = int(input("Enter value: "))
+            root.insert(data)
 
         elif n == 2:
-            obj.traverse()
+            root.preorder()
+            print()
+
+        elif n == 3:
+            root.inorder()
+            print()
+
+        elif n == 4:
+            root.postorder()
+            print()
 
         elif n == 0:
-            sys.exit(0)
+            sys.exit()
 
         else:
-            print("Invalid Choice")    
-
-   
-       
+            print("Invalid choice!")
